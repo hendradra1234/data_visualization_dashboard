@@ -45,6 +45,7 @@ def create_bystate_df(df):
     bystate_df.rename(columns={
         "customer_id": "customer_count"
     }, inplace=True)
+    return bystate_df
 
 def create_rfm_df(df):
     rfm_df = df.groupby(by="customer_id", as_index=False).agg({
@@ -107,7 +108,7 @@ with coll2:
     total_revenue = format_currency(daily_orders_df.revenue.sum(), "AUD", locale='id')
     st.metric("Total Revenue", value=total_revenue)
 
-fig, ax = plt.subplot(figsize=(16, 8))
+fig, ax = plt.subplots(figsize=(16, 8))
 
 ax.plot(
     daily_orders_df["order_date"],
@@ -124,7 +125,7 @@ st.pyplot(fig)
 
 st.subheader("Best & Worst Performing Product")
 
-fig, ax = plt.subplot(nrows=1, ncols=2, figsize=(35, 15))
+fig, ax = plt.subplots(nrows=1, ncols=2, figsize=(35, 15))
 colors = ["#90CAF9", "#D3D3D3", "#D3D3D3", "#D3D3D3", "#D3D3D3"]
 
 sns.barplot(x="quantity_x", y="product_name", data=sum_order_items_df.head(5), palette=colors, ax=ax[0])
@@ -202,7 +203,7 @@ ax.tick_params(axis='y', labelsize=20)
 ax.tick_params(axis='x', labelsize=15)
 st.pyplot(fig)
 
-t.subheader("Best Customer Based on RFM Parameters")
+st.subheader("Best Customer Based on RFM Parameters")
  
 col1, col2, col3 = st.columns(3)
  
